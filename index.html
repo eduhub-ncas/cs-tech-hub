@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>TEC-HUB • Repositories</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="assets/logo.jpg" />
+  <link rel="apple-touch-icon" href="assets/logo.jpg" />
+
+  <link rel="preconnect" href="https://api.github.com">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="appGradient" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand-block unified" href="https://github.com/cs-tech-hub" target="_blank" rel="noopener" title="Go to organization">
+      <img class="brand-logo" src="assets/logo.jpg" alt="TEC-HUB Logo" loading="eager" decoding="async">
+      <span class="brand-line">cs TEC‑HUB</span>
+    </a>
+
+    <nav class="controls">
+      <button id="searchToggle" class="icon-btn" aria-label="Search" aria-expanded="false">
+        <span class="icon">🔍</span>
+      </button>
+      <button id="sortToggle" class="icon-btn" aria-label="Sort" aria-expanded="false">
+        <span class="icon sort-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 4v13M8 17l-3-3m3 3l3-3M16 20V7m0 0l-3 3m3-3l3 3"/>
+          </svg>
+        </span>
+      </button>
+    </nav>
+
+    <div id="searchPanel" class="panel hidden" role="dialog" aria-label="Search Panel">
+      <div class="panel-inner">
+        <div class="input-chip">
+          <input id="searchInput" type="search" placeholder="Search repositories..." autocomplete="off">
+          <button id="clearSearch" class="clear-btn" aria-label="Clear">✕</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="sortPanel" class="panel hidden" role="dialog" aria-label="Sort Panel">
+      <div class="panel-inner">
+        <form id="sortForm" class="sort-form">
+          <fieldset>
+            <legend>Sort By</legend>
+            <label><input type="radio" name="sortMode" value="stars-desc" checked> Stars ↓</label>
+            <label><input type="radio" name="sortMode" value="stars-asc"> Stars ↑</label>
+            <label><input type="radio" name="sortMode" value="updated-desc"> Updated ↓</label>
+            <label><input type="radio" name="sortMode" value="updated-asc"> Updated ↑</label>
+            <label><input type="radio" name="sortMode" value="created-desc"> Created ↓</label>
+            <label><input type="radio" name="sortMode" value="created-asc"> Created ↑</label>
+            <label><input type="radio" name="sortMode" value="name-asc"> Name A→Z</label>
+            <label><input type="radio" name="sortMode" value="name-desc"> Name Z→A</label>
+          </fieldset>
+          <button type="button" id="applySort" class="pill-btn wide">Apply</button>
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="top-meta">
+      <span id="repoCount" class="meta-pill">Loading…</span>
+      <div class="pager inline">
+        <button id="prevTop" class="pager-link" disabled>PREVIOUS</button>
+        <span id="pageInfoTop" class="page-num">01</span>
+        <button id="nextTop" class="pager-link">NEXT</button>
+      </div>
+    </div>
+
+    <section id="cards" class="cards-grid" aria-live="polite"></section>
+
+    <div id="loading" class="loading active">
+      <div class="spinner"></div>
+    </div>
+    <div id="empty" class="empty hidden">No repositories found.</div>
+    <div id="errorBox" class="error hidden">
+      <p id="errorMsg">Error loading repositories.</p>
+      <button id="retryBtn" class="pill-btn primary">Retry</button>
+    </div>
+
+    <div class="bottom-pager">
+      <button id="prevBottom" class="pager-link" disabled>PREVIOUS</button>
+      <span id="pageInfoBottom" class="page-num">01</span>
+      <button id="nextBottom" class="pager-link">NEXT</button>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <a class="footer-link-full" href="https://github.com/cs-tech-hub" target="_blank" rel="noopener">
+      &copy; <span id="year"></span> NILGIRI COLLEGE ( DEPARTMENT OF COMPUTER SCIENCE ) • TEC-HUB
+    </a>
+  </footer>
+
+  <template id="cardTemplate">
+    <article class="repo-card">
+      <div class="repo-cover">
+        <img class="logo" alt="TEC-HUB Logo" loading="lazy">
+        <div class="gradient-layer"></div>
+      </div>
+      <div class="repo-body">
+        <h3 class="repo-name"></h3>
+        <p class="repo-desc"></p>
+        <div class="repo-stats">
+          <span title="Stars">★ <b class="stars">0</b></span>
+          <span title="Forks">⑂ <b class="forks">0</b></span>
+          <span title="Watchers">👁 <b class="watchers">0</b></span>
+          <span class="lang"><span class="dot"></span><b class="lang-name">—</b></span>
+        </div>
+        <div class="dates">
+          <span class="updated-rel"></span>
+        </div>
+        <div class="card-actions">
+          <a class="pill-btn tiny primary gh-link" target="_blank" rel="noopener">Open</a>
+          <button class="pill-btn tiny ghost files-btn" type="button" aria-expanded="false">Files</button>
+        </div>
+        <div class="files-panel hidden">
+          <div class="files-loading">Loading files…</div>
+          <ul class="files-list"></ul>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
